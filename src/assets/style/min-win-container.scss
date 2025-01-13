@@ -1,0 +1,25 @@
+.min-win-holder {
+  position: fixed;
+  z-index: 6;
+  bottom: 15px;
+  left: 15px;
+  .min-win {
+    background: #fff;
+    opacity: 0.8;
+    mix-blend-mode: multiply;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 1px;
+    max-width: 80px;
+    display: flex;
+    .txt {
+      margin: 5px;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #000;
+      font-size: 1.2rem;
+    }
+  }
+}

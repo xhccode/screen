@@ -1,0 +1,56 @@
+.page-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  .locator-box {
+    position: fixed;
+    top: 8rem;
+    height: 0;
+    width: 100%;
+    z-index: 99;
+    display: flex;
+    .map-locate-box {
+      margin: auto;
+    }
+  }
+  .left-box {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    @media screen and (min-height: 1200px) {
+      top: 2rem;
+    }
+    z-index: 999;
+    display: flex;
+    .left-inner {
+      margin: auto;
+      min-height: 675px;
+      height: 66vh;
+      @media screen and (min-height: 1200px) {
+        height: 80vh;
+      }
+    }
+  }
+  .right-box {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0;
+    @media screen and (min-height: 1200px) {
+      top: 2rem;
+    }
+    z-index: 999;
+    display: flex;
+    .right-inner {
+      margin: auto;
+      min-height: 675px;
+      height: 66vh;
+      @media screen and (min-height: 1200px) {
+        height: 80vh;
+      }
+    }
+  }
+}

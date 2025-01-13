@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Content-Security-Policy" content="" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
+    <title>${process.env.VUE_APP_NAME}</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but default doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <script type="text/javascript" src="<%= BASE_URL %>/Cesium/Cesium.js"></script>
+<!--    <iframe src="static/audio/empty.mp3" allow="autoplay" style="display: none;"></iframe>-->
+  </body>
+  <script type="text/javascript">
+    // window.HELP_IMPROVE_VIDEOJS = false
+    // window.onload = function() {
+    //   var context = new AudioContext()
+    // }
+    // //
+    // resizeLogic()
+    // //
+    // window.addEventListener('resize', resizeLogic, false)
+    // function resizeLogic() {
+    //   let innerWidth = window.innerWidth
+    //   let domHTML = document.getElementsByTagName('html')[0]
+    //   if (innerWidth < 3600) {
+    //     domHTML.style.fontSize = '10px'
+    //   } else {
+    //     domHTML.style.fontSize = '20px'
+    //   }
+    // }
+  </script>
+
+<!--  <script src="/static/js/jquery-1.10.2-min.js"></script>-->
+<!--  <script src="/static/js/EasyPlayer-lib.min.js"></script>-->
+</html>

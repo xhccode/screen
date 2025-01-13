@@ -1,0 +1,470 @@
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  font-size: 1.2rem;
+  @media screen and (min-height: 1200px) {
+    line-height: 1.8;
+  }
+  * {
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    user-select: none;
+  }
+  a:hover,
+  a:link {
+    text-decoration: none;
+  }
+  .iconfont {
+    font-size: 2rem;
+  }
+  ul {
+    padding: 0;
+    li {
+      list-style: none;
+    }
+  }
+  .xs-loading {
+    background: transparent;
+    &-black {
+      background: transparent;
+      .el-loading-spinner {
+        .circular {
+          .path {
+            stroke-width: 5;
+            stroke: #000;
+          }
+        }
+      }
+      .el-loading-text {
+        color: #000;
+        font-weight: bold;
+      }
+    }
+    &-white {
+    }
+    .el-loading-spinner {
+      .circular {
+        .path {
+          stroke-width: 5;
+          stroke: #fff;
+        }
+      }
+    }
+    .el-loading-text {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+  .xs-select {
+    width: 100%;
+    &.el-select {
+      &.online {
+        .el-input {
+          .el-input__inner {
+            color: #04b028 !important;
+            font-weight: bold;
+          }
+          .el-input__suffix-inner {
+            .el-select__caret {
+              color: #04b028 !important;
+            }
+          }
+        }
+      }
+      &.offline {
+        .el-input {
+          .el-input__inner {
+            color: #ff0000 !important;
+            font-weight: bold;
+          }
+          .el-input__suffix-inner {
+            .el-select__caret {
+              color: #ff0000 !important;
+            }
+          }
+        }
+      }
+      margin: auto;
+      .el-input {
+        .el-input__inner {
+          background: transparent;
+          color: #fff;
+          border: none;
+          font-size: 1.4rem;
+        }
+        .el-select__caret {
+          color: #fff !important;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+  .xs-popover {
+    background: rgba(18, 28, 58, 0.76);
+    .el-popconfirm__main {
+      color: #fff;
+      height: 3.2rem;
+      line-height: 3.2rem;
+      font-size: 1.6rem;
+    }
+  }
+  .xs-select-dropdown {
+    background: rgba(19, 41, 47, 0.8);
+    .el-scrollbar {
+      .el-select-dropdown__list {
+        .el-select-dropdown__item {
+          background: transparent;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .el-notification {
+    background: rgba(9, 33, 36, 0.8);
+    box-shadow: 0 0 15px #fff;
+    &.right {
+      right: 25px;
+    }
+    &.left {
+      left: 25px;
+    }
+    display: flex;
+    .el-notification__group {
+      flex: 1;
+      min-width: 0;
+      position: relative;
+      display: flex;
+      .el-notification__title {
+        display: none;
+      }
+      .el-notification__content {
+        color: #fff;
+        margin: auto 0;
+      }
+      .el-notification__closeBtn {
+        position: absolute;
+        top: -10px;
+        right: -30px;
+        font-size: 1.4rem;
+        color: #fff;
+        height: 24px;
+        width: 24px;
+        padding: 6px 4px;
+        display: flex;
+        &:hover {
+          border-radius: 50%;
+          box-shadow: 0 0 5px #fff;
+        }
+      }
+    }
+  }
+  .el-input {
+    &.xs-input {
+      .el-input__inner {
+        border-radius: 0 !important;
+        background: transparent;
+        color: #fff;
+        height: 3.2rem;
+        line-height: 3.2rem;
+        padding-left: 3rem;
+      }
+      .el-input__prefix {
+        left: 0.5rem;
+        padding: 0 5px;
+        display: flex;
+        i {
+          margin: auto;
+          height: 1rem;
+          line-height: 1rem;
+        }
+      }
+    }
+  }
+
+  .el-checkbox {
+    .el-checkbox__inner {
+      width: 1.4rem;
+      height: 1.4rem;
+      box-shadow: none;
+      &::after {
+        height: 0.7rem;
+        width: 0.3rem;
+        left: 0.4rem;
+        top: 0.15rem;
+      }
+    }
+    &.xs-el-checkbox {
+      .el-checkbox__input {
+        .el-checkbox__inner {
+          background-color: #1c1724;
+        }
+        &.is-checked {
+          .el-checkbox__inner {
+            background-color: #1c1724;
+            border-color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .xs-bg-linear-gradient {
+    background: linear-gradient(90deg, #0eb2ff, transparent);
+  }
+
+  .xs-drawer-item-head {
+    width: 100%;
+    display: flex;
+    .title {
+      display: flex;
+      // background: linear-gradient(90deg, #0eb2ff, transparent);
+      .txt {
+        margin: auto;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+    }
+    .line {
+      flex: 1;
+      min-width: 0;
+      height: 0.2rem;
+      background: linear-gradient(90deg, transparent, #fff);
+      margin: auto 0;
+    }
+    .dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      margin: auto;
+      background: #fff;
+      box-shadow: 0 0 0.5rem #fff;
+      border-radius: 50%;
+    }
+  }
+
+  // 涟漪效果
+  .xs-lianyi-solid {
+    width: 24px;
+    height: 24px;
+    background-color: #6cb552;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    &::before {
+      content: '';
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -16px;
+      margin-top: -16px;
+      border-radius: 50%;
+      animation: lianyi 1.5s ease-out 0s infinite;
+      background-color: rgba(108, 181, 82, 0.5);
+    }
+  }
+
+  .xs-lianyi-circle {
+    width: 2.4rem;
+    height: 2.4rem;
+    box-sizing: content-box;
+    &::before {
+      position: absolute;
+      top: 0.4rem;
+      left: 0.4rem;
+      content: '';
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      box-sizing: border-box;
+      animation: lianyi 1.5s ease-out 0s infinite;
+      background-color: transparent;
+      border: 0.6rem solid rgba(108, 181, 82, 0.5);
+      box-shadow: 0 0 1.5rem #6cb552;
+    }
+    display: flex;
+    .center-dot {
+      margin: auto;
+      color: #6cb552;
+    }
+  }
+
+  .xs-btn {
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 5px #fff;
+    }
+  }
+  .xs-el-tooltip {
+    &--small {
+      max-width: 200px;
+    }
+    &--light {
+      background: #fff !important;
+      color: #000 !important;
+    }
+  }
+
+  .vjs-loading-spinner {
+    .vjs-control-text {
+      display: none;
+    }
+  }
+
+  .el-tabs {
+    &--top {
+      display: flex;
+      flex-direction: column;
+      .el-tabs__header {
+        margin-bottom: 1.5rem;
+        .el-tabs__nav-wrap {
+          &.is-scrollable {
+            padding: 0 2rem;
+            > span {
+              height: 100%;
+              width: 2rem;
+              line-height: unset;
+              font-size: 1.4rem;
+              display: flex;
+              i {
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin: auto;
+              }
+            }
+          }
+        }
+        .el-tabs__nav {
+          border-radius: 0;
+        }
+      }
+      .el-tabs__content {
+        flex: 1;
+        min-height: 0;
+        .el-tab-pane {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .xs-el-input {
+  }
+
+  .xs-el-tree {
+    background: transparent;
+    color: #fff;
+    .el-tree-node {
+      &:focus {
+        background: transparent;
+      }
+    }
+    .el-tree-node__content {
+      &:hover {
+        background: transparent;
+      }
+      &:focus {
+        background: transparent;
+      }
+      &:visited {
+        background: transparent;
+      }
+      display: flex;
+      .el-checkbox {
+        .el-checkbox__input {
+          .el-checkbox__inner {
+            background-color: #1c1724;
+          }
+          &.is-checked {
+            .el-checkbox__inner {
+              background-color: #1c1724;
+              border-color: #fff;
+              box-shadow: 0 0 5px #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .el-checkbox {
+    &.xs-el-checkbox {
+      .el-checkbox__input {
+        .el-checkbox__inner {
+          background-color: #1c1724;
+        }
+        &.is-checked {
+          .el-checkbox__inner {
+            background-color: #1c1724;
+            border-color: #fff;
+            box-shadow: 0 0 5px #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .xs-el-table {
+    display: flex;
+    flex-direction: column;
+    .el-table__header-wrapper {
+      .el-table__header {
+        th {
+          height: 4rem;
+          line-height: 4rem;
+          font-weight: bolder;
+          font-size: 1.4rem;
+          color: #000;
+          background: #fff;
+          .cell {
+            line-height: 2.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          @media screen and (min-width: 3600px) {
+            height: 3rem;
+          }
+        }
+      }
+    }
+    .el-table__body-wrapper {
+      flex: 1;
+      min-height: 0;
+      .cell {
+        line-height: 2.4rem;
+        font-size: 1.08rem;
+      }
+    }
+  }
+
+  .none {
+    display: none;
+  }
+  .el-tabs__item {
+    font-size: 1.4rem;
+    line-height: 3.33rem;
+    height: auto;
+  }
+  .el-dialog__body,
+  .el-input,
+  .el-select,
+  .el-tree-node__label,
+  .el-dropdown {
+    font-size: 1.4rem;
+  }
+
+  .el-tree-node__content {
+    min-height: 2.8rem;
+    .el-tree-node__expand-icon {
+      font-size: 1.2rem;
+    }
+  }
+  .noticeRegion .el-checkbox .el-checkbox__input .el-checkbox__inner {
+    border-color: #606266;
+  }
+}
