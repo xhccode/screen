@@ -29,43 +29,60 @@ export default {
 
     }
   },
-  mounted(){
+  async mounted(){
+    // cesium token
+    // Cesium.Ion.defaultAccessToken = process.env.VUE_APP_CESIUM_TOKEN;
+
+    window.viewer = new Cesium.Viewer('my-map',{
+      // 去除离线加载时使用token问题
+      imageryProvider: new Cesium.TileMapServiceImageryProvider({
+        url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+      }),
+      homeButton:false,
+      sceneModePicker:false,
+      baseLayerPicker:false,// 影像切换
+      animation:false,// 是否显示动画控件
+      infoBox:false,// 是否显示点击要素之后显示的信息
+      selectionIndicator:false,// 要素选中框
+      geocoder:false,// 是否显示地名查找控件
+      timeline:false,// 是否显示时间线控件
+      fullscreenButton:false,
+      shouldAnimate:true,
+      scene3DOnly:true,// 每个几何实例以3D渲染，节省GPU内存
+      navigationHelpButton:false,// 是否显示帮助信息控件
+      contextOptions: {
+        webgl: {
+          alpha: true,
+          depth: false,
+          stencil: true,
+          antialias: true,
+          premultipliedAlpha: true,
+          preserveDrawingBuffer: true,
+          failIfMajorPerformanceCaveat: true,
+        },
+        allowTextureFilterAnisotropic: true,
+      },
+      // baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+      //   url: "https://2.16.66.38:8092/xsTdtYx116png/{z}/{x}/{y}.png",
+      //   minimumLevel: 7,
+      //   maximumLevel: 15
+      // })),
+    })
     this.init()
   },
   methods:{
     init(){
-      Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4YzQ5MDc1MC00NjI2LTQ0NzQtYTk5MC0xNGEzOTEzZDVmNTciLCJpZCI6Njg4ODYsImlhdCI6MTczNjMxNDUzNn0.1qS1yn2kTC5TLc6iw94zxFDOa6qTIs-dNWgqx2vtlog";
-      window.viewer = new Cesium.Viewer('my-map',{
-        homeButton:false,
-        sceneModePicker:false,
-        baseLayerPicker:false,// 影像切换
-        animation:false,// 是否显示动画控件
-        infoBox:false,// 是否显示点击要素之后显示的信息
-        selectionIndicator:false,// 要素选中框
-        geocoder:false,// 是否显示地名查找控件
-        timeline:false,// 是否显示时间线控件
-        fullscreenButton:false,
-        shouldAnimate:true,
-        scene3DOnly:true,// 每个几何实例以3D渲染，节省GPU内存
-        navigationHelpButton:false,// 是否显示帮助信息控件
-        contextOptions: {
-          webgl: {
-            alpha: true,
-            depth: false,
-            stencil: true,
-            antialias: true,
-            premultipliedAlpha: true,
-            preserveDrawingBuffer: true,
-            failIfMajorPerformanceCaveat: true,
-          },
-          allowTextureFilterAnisotropic: true,
-        },
-        // baseLayer: new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
-        //   url: "https://2.16.66.38:8092/xsTdtYx116png/{z}/{x}/{y}.png",
-        //   minimumLevel: 7,
-        //   maximumLevel: 15
-        // })),
-      })
+      // 获取默认地图瓦片服务
+      let defaultImagery = viewer.imageryLayers.get(0);
+      // 设置默认地图的透明度为0，从而隐藏地图
+      defaultImagery.alpha = 0.0;
+
+      // 初始化地图
+      // this.initBaseLayer();
+      // 天地图秘钥
+      let MAP_KEY = process.env.VUE_APP_MAP_CN_TOKEN;
+      // 矢量地图-经纬度投影
+      this.addTdtLayerC({type:process.env.VUE_APP_MAP_WMTS_VEC_C},MAP_KEY)
 
       console.log(viewer.cesiumWidget.creditContainer)
       // 去掉logo
@@ -134,6 +151,134 @@ export default {
         destination: Cesium.Cartesian3.fromDegrees(lat, lon, n),
         easingFunction: Cesium.EasingFunction.LINEAR_NONE,
       });
+    },
+
+    // 天地图(经纬度投影)
+    addTdtLayerC(options,key) {
+      // let url = `https://t{s}.tianditu.gov.cn/DataServer?T=${options.type}&x={x}&y={y}&l={z}&tk=${key}`
+      const layerProvider = new Cesium.WebMapTileServiceImageryProvider({
+        url: `${process.env.VUE_APP_MAP_WMTS_VEC_CN}?tk=${key}&format=tiles&height=256&width=256&maxZoom=18&minZoom=0&tileSize=256`,
+        layer: options.type.slice(0,options.type.length - 2),
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "c",
+        subdomains:["t0","t1","t2","t3","t4","t5","t6","t7"],
+        tilingScheme: new Cesium.GeographicTilingScheme(),
+        tileMatrixLabels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
+      });
+      // layerProvider.hue = 3; // 图层色调
+      // layerProvider.contrast = -1.2; // 图层对比度
+      viewer.imageryLayers.addImageryProvider(layerProvider);
+
+    },
+    // 天地图瓦片(墨卡托投影)
+    addTdtLayerW(options,key) {
+      let url = `https://t{s}.tianditu.gov.cn/DataServer?T=${options.type}&x={x}&y={y}&l={z}&tk=${key}`
+      const layerProvider = new Cesium.UrlTemplateImageryProvider({
+        url: url,
+        subdomains: ['0','1','2','3','4','5','6','7'],
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        maximumLevel: 18
+      });
+      viewer.imageryLayers.addImageryProvider(layerProvider);
+    },
+    // 天地图WMTS(墨卡托投影)
+    addTdtLayerW2(options,key) {
+      let url = `https://t{s}.tianditu.gov.cn/${options.type}/wmts?tk=${key}`
+      const layerProvider = new Cesium.WebMapTileServiceImageryProvider({
+        url: url,
+        layer: options.type.slice(0,options.type.length - 2),
+        style: 'default',
+        format: 'tiles',
+        tileMatrixSetID: "w",
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        subdomains: ['0','1','2','3','4','5','6','7'],
+        maximumLevel: 18
+      });
+      viewer.imageryLayers.addImageryProvider(layerProvider);
+    },
+
+
+
+    //初始化地图
+    initBaseLayer() {
+      // wmts
+      // 天地图秘钥
+      let MAP_KEY = process.env.VUE_APP_MAP_CN_TOKEN;
+      const WMTS_VEC_CN1 = new Cesium.WebMapTileServiceImageryProvider({
+          // url: `${process.env.VUE_APP_MAP_WMTS_VEC_CN}?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILEMATRIX={TileMatrix}&TILEROW={TileRow}&TILECOL={TileCol}&tk=${MAP_KEY}`,
+          url: `https://{s}.tianditu.gov.cn/vec_c/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&" +
+            "LAYER=vec&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILEMATRIX={TileMatrix}" +
+            "&TILEROW={TileRow}&TILECOL={TileCol}&tk=${MAP_KEY}`,
+          layer: "vec_c",
+          style: "default",
+          format: "tiles",
+          tileMatrixSetID: "c",
+          subdomains:["t0","t1","t2","t3","t4","t5","t6","t7"],
+          tilingScheme: new Cesium.GeographicTilingScheme(),
+          tileMatrixLabels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"],
+          maximumLevel: 18,
+        })
+
+      const WMTS_VEC_CN = new Cesium.WebMapTileServiceImageryProvider({
+        url: `https://{s}.tianditu.gov.cn/vec_w/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles&TILEMATRIX={TileMatrix}&TILEROW={TileRow}&TILECOL={TileCol}&tk=${MAP_KEY}`,
+        layer: "vec_w",
+        style: "default",
+        format: "tiles",
+        tileMatrixSetID: "w",
+        subdomains:["t0","t1","t2","t3","t4","t5","t6","t7"],
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+      });
+
+      // const WMTS_VEC_CN = new Cesium.WebMapTileServiceImageryProvider({
+      //   url: `${process.env.VUE_APP_MAP_WMTS_VEC_CN}?tk=${process.env.VUE_APP_MAP_CN_TOKEN}&format=tiles&height=256&width=256&maxZoom=18&minZoom=0&tileSize=256`,// WMTS服务的URL模板
+      //   layer: "vec",// WMTS服务中的图层名称
+      //   // tileMatrixSetID: "EPSG:4326",// 瓦片矩阵集ID
+      //   // format: "tiles",// 图像格式
+      //   // style : 'default',// 样式名称
+      //   // tilingScheme: new Cesium.GeographicTilingScheme(),// 瓦片划分方案（可选，默认为GeographicTilingScheme）
+      //   // token: process.env.VUE_APP_MAP_CN_TOKEN,
+      //   // minimumLevel: 0,// 最小瓦片级别（可选）
+      //   // maximumLevel:18,// 最大瓦片级别（可选）
+      // });
+      const WMTS_VCA_CN = new Cesium.WebMapTileServiceImageryProvider({
+        url: `${process.env.VUE_APP_MAP_WMTS_VCA_CN}?tk=${process.env.VUE_APP_MAP_CN_TOKEN}&format=tiles&height=256&width=256&maxZoom=18&minZoom=0&tileSize=256`,// WMTS服务的URL模板
+        layer: "vca",// WMTS服务中的图层名称
+        tileMatrixSetID: "c",// 瓦片矩阵集ID
+        format: "tiles",// 图像格式
+        style : 'default',// 样式名称
+        // tilingScheme: new Cesium.GeographicTilingScheme(),// 瓦片划分方案（可选，默认为GeographicTilingScheme）
+        // token: process.env.VUE_APP_MAP_CN_TOKEN,
+        minimumLevel: 0,// 最小瓦片级别（可选）
+        maximumLevel:18,// 最大瓦片级别（可选）
+      });
+      const WMTS_IMG_CN = new Cesium.WebMapTileServiceImageryProvider({
+        url: `${process.env.VUE_APP_MAP_WMTS_IMG_CN}?tk=${process.env.VUE_APP_MAP_CN_TOKEN}&format=tiles&height=256&width=256&maxZoom=18&minZoom=0&tileSize=256`,// WMTS服务的URL模板
+        layer: "img",// WMTS服务中的图层名称
+        tileMatrixSetID: "EPSG:4326",// 瓦片矩阵集ID
+        format: "tiles",// 图像格式
+        style : 'default',// 样式名称
+        tilingScheme: new Cesium.GeographicTilingScheme(),// 瓦片划分方案（可选，默认为GeographicTilingScheme）
+        token: process.env.VUE_APP_MAP_CN_TOKEN,
+        minimumLevel: 0,// 最小瓦片级别（可选）
+        maximumLevel:18,// 最大瓦片级别（可选）
+      });
+      const WMTS_CIA_CN = new Cesium.WebMapTileServiceImageryProvider({
+        url: `${process.env.VUE_APP_MAP_WMTS_CIA_CN}?tk=${process.env.VUE_APP_MAP_CN_TOKEN}&format=tiles&height=256&width=256&maxZoom=18&minZoom=0&tileSize=256`,// WMTS服务的URL模板
+        layer: "cia",// WMTS服务中的图层名称
+        tileMatrixSetID: "EPSG:4326",// 瓦片矩阵集ID
+        format: "tiles",// 图像格式
+        style : 'default',// 样式名称
+        tilingScheme: new Cesium.GeographicTilingScheme(),// 瓦片划分方案（可选，默认为GeographicTilingScheme）
+        token: process.env.VUE_APP_MAP_CN_TOKEN,
+        minimumLevel: 0,// 最小瓦片级别（可选）
+        maximumLevel:18,// 最大瓦片级别（可选）
+      });
+      // viewer.imageryLayers.addImageryProvider(WMTS_VEC_CN1);
+      // viewer.imageryLayers.addImageryProvider(WMTS_VCA_CN);
+      // viewer.imageryLayers.addImageryProvider(WMTS_IMG_CN);
+      // viewer.imageryLayers.addImageryProvider(WMTS_CIA_CN);
+      // viewer.imageryLayers.addImageryProvider(WMSWorld,1);
     },
     onStartEntity(){
       let _dataSource = null;

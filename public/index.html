@@ -19,29 +19,29 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <iframe src="static/audio/empty.mp3" allow="autoplay" style="display: none;"></iframe>
     <script type="text/javascript" src="<%= BASE_URL %>/Cesium/Cesium.js"></script>
-<!--    <iframe src="static/audio/empty.mp3" allow="autoplay" style="display: none;"></iframe>-->
   </body>
   <script type="text/javascript">
-    // window.HELP_IMPROVE_VIDEOJS = false
-    // window.onload = function() {
-    //   var context = new AudioContext()
-    // }
-    // //
-    // resizeLogic()
-    // //
-    // window.addEventListener('resize', resizeLogic, false)
-    // function resizeLogic() {
-    //   let innerWidth = window.innerWidth
-    //   let domHTML = document.getElementsByTagName('html')[0]
-    //   if (innerWidth < 3600) {
-    //     domHTML.style.fontSize = '10px'
-    //   } else {
-    //     domHTML.style.fontSize = '20px'
-    //   }
-    // }
+    window.HELP_IMPROVE_VIDEOJS = false
+    window.onload = function() {
+      var context = new AudioContext()
+    }
+    //
+    resizeLogic()
+    //
+    window.addEventListener('resize', resizeLogic, false)
+    function resizeLogic() {
+      let innerWidth = window.innerWidth
+      let domHTML = document.getElementsByTagName('html')[0]
+      if (innerWidth < 3600) {
+        domHTML.style.fontSize = '10px'
+      } else {
+        domHTML.style.fontSize = '20px'
+      }
+    }
   </script>
 
-<!--  <script src="/static/js/jquery-1.10.2-min.js"></script>-->
-<!--  <script src="/static/js/EasyPlayer-lib.min.js"></script>-->
+  <script src="/static/js/jquery-1.10.2-min.js"></script>
+  <script src="/static/js/EasyPlayer-lib.min.js"></script>
 </html>

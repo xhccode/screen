@@ -580,14 +580,6 @@ export default {
             this.flyToLayer(item);
         },
         /**
-         * 将所有地形图层隐藏
-         */
-        hiddenTerrain() {
-            this.terrainProviders.map((item) => {
-                item.terrainShow = false;
-            });
-        },
-        /**
          * 添加3dtile模型
          */
         addOSGB(item) {
@@ -953,23 +945,6 @@ export default {
             this.timeImageLayers = [];
         },
         /**
-         * 影像图层置顶
-         */
-        imageRaiseToTop(index) {
-            if (index === 0) {
-                return;
-            }
-            let value = this.imageLayers.splice(index, 1)[0];
-            let imageryLayer = value.imageryLayer;
-            if (imageryLayer.show === true) {
-                this.flyToLayer(value);
-                const layerName = value.layerName;
-                const legend = legendMap.get(layerName);
-            }
-            viewer.imageryLayers.raiseToTop(imageryLayer);
-            this.imageLayers.unshift(value);
-        },
-        /**
          * 影像图层显隐
          */
         imageCheckboxClick(value, index) {
@@ -1065,14 +1040,6 @@ export default {
                     // const legend = legendMap.get(layerName);
                 }
             }
-        },
-        /**
-         * 将所有地形图层隐藏
-         */
-        hiddenTerrain() {
-            this.terrainProviders.map((item) => {
-                item.terrainShow = false;
-            });
         },
         /**
          * 将所有地形图层隐藏

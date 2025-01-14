@@ -17,8 +17,7 @@ export const routers = [
     path: '/',
     name: 'Login',
     component: () =>
-      // import(/* webpackChunkName: "login_ex" */ '@/pages/Login.vue')
-      import(/* webpackChunkName: "login_ex" */ '@/components/HelloWorld.vue')
+      import(/* webpackChunkName: "login_ex" */ '@/pages/Login.vue')
   },
   {
     path: '/home',
