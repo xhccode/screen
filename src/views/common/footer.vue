@@ -53,6 +53,9 @@
 </template>
 <script>
 import data from './footer_data.js'
+import LOG from '@/utils/logger'
+import API from '@/api'
+import EVENT from "@/utils/Events";
 export default {
   name: 'XsFooter',
   data () {

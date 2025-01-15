@@ -3,9 +3,7 @@
  */
 import $axios from '@/utils/axios.js'
 import store from '@/store/index.js'
-// import { genTestUserSig } from '../../static/debug/GenerateTestUserSig'
-// const SDKAppID = ''
-// const SDKAppID = genTestUserSig('').sdkAppID
+
 export default {
   /**
    * http://47.100.91.141:3000/project/105/interface/api/1893
@@ -20,6 +18,56 @@ export default {
     }
     return $axios(service, data)
   },
+  /**
+   * http://47.100.91.141:3000/project/105/interface/api/1866
+   * 获取(当前)用户信息-李峥宇
+   */
+  getUserInfo () {
+    const service = {
+      method: 'get',
+      secure: false,
+      url: `/dataView/system/getUserInfo`,
+      markerable: function ({ data: { data } }) {
+        if(data){
+          let { account, loginName, userName, realName, mobilePhone, profilePicture } = data
+          data.phone = data.phone || mobilePhone
+          data.name = data.name || userName || realName
+          data.account = account || loginName
+          data.loginName = loginName || account
+          data.post = data.post || data.postName
+          data.url = data.url || profilePicture
+        }
+      }
+    }
+    return $axios(service)
+  },
+  /**
+   * @version 1.0.0
+   * @author tangyuchen
+   * @description 登出接口
+   * @param {*}
+   * @return
+   */
+  logout (data) {
+    // if (process.env.NODE_ENV === 'development') {
+    //   return new Promise(function (resolve) {
+    //     resolve()
+    //   })
+    // }
+    const service = {
+      method: 'get',
+      url: '/dataView/system/logout'
+    }
+    return $axios(service, data)
+  },
+
+
+
+
+
+
+
+
   /**
    * http://47.100.91.141:3000/project/105/interface/api/1803
    * 区域选择下拉查询-周文才（地图通用 在网格首页 网格比较）
@@ -155,29 +203,6 @@ export default {
     return $axios(service, data)
   },
   /**
-   * http://47.100.91.141:3000/project/105/interface/api/1866
-   * 获取(当前)用户信息-李峥宇
-   */
-  getUserInfo () {
-    const service = {
-      method: 'get',
-      secure: false,
-      url: `/dataView/system/getUserInfo`,
-      markerable: function ({ data: { data } }) {
-        if(data){
-          let { account, loginName, userName, realName, mobilePhone, profilePicture } = data
-          data.phone = data.phone || mobilePhone
-          data.name = data.name || userName || realName
-          data.account = account || loginName
-          data.loginName = loginName || account
-          data.post = data.post || data.postName
-          data.url = data.url || profilePicture
-        }
-      }
-    }
-    return $axios(service)
-  },
-  /**
    * @version 1.0.0
    * @author tangyuchen
    * @description 修改密码接口
@@ -189,25 +214,6 @@ export default {
       method: 'post',
       baseURL: process.env.UPMS_URL,
       url: '/user/changePassword'
-    }
-    return $axios(service, data)
-  },
-  /**
-   * @version 1.0.0
-   * @author tangyuchen
-   * @description 登出接口
-   * @param {*}
-   * @return
-   */
-  logout (data) {
-    if (process.env.NODE_ENV === 'development') {
-      return new Promise(function (resolve) {
-        resolve()
-      })
-    }
-    const service = {
-      method: 'get',
-      url: '/dataView/system/logout'
     }
     return $axios(service, data)
   },

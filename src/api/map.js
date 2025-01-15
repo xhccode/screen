@@ -4,6 +4,31 @@
 import $axios from '@/utils/axios.js'
 export default {
   /**
+   * http://47.100.91.141:3000/project/105/interface/api/2127
+   * 获取地图边界
+   * @param {orgCode} data
+   */
+  getOrgRegionalBoundary (data) {
+    if (!data || !data.orgCode) {
+      throw new Error('请提供参数orgCode')
+    }
+    const service = {
+      method: 'get',
+      url: `/dataView/gridConstruction/index/getOrgRegionalBoundary`,
+      markerable: function ({ data: { data } }) {
+        // MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
+      }
+    }
+    Object.assign(service, { headers: { orgCode: data.orgCode } })
+    return $axios(service, data)
+  },
+
+
+
+
+
+
+  /**
    * http://47.100.91.141:3000/project/105/interface/api/1875
    * 子级区域边界查询-周文才（地图通用 在网格首页 网格比较）
    * @param {orgCode} data
@@ -41,25 +66,7 @@ export default {
     Object.assign(service, { headers: { orgCode: data.orgCode } })
     return $axios(service, data)
   },
-  /**
-   * http://47.100.91.141:3000/project/105/interface/api/2127
-   * 获取地图边界
-   * @param {orgCode} data
-   */
-  getOrgRegionalBoundary (data) {
-    if (!data || !data.orgCode) {
-      throw new Error('请提供参数orgCode')
-    }
-    const service = {
-      method: 'get',
-      url: `/dataView/gridConstruction/index/getOrgRegionalBoundary`,
-      markerable: function ({ data: { data } }) {
-        MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
-      }
-    }
-    Object.assign(service, { headers: { orgCode: data.orgCode } })
-    return $axios(service, data)
-  },
+
   /**
    * http://47.100.91.141:3000/project/105/interface/api/4353
    * 根据网格code、管理单元格类型 获取子级地图区域管理单元格边界-孙坤

@@ -109,11 +109,12 @@
 
 <script>
 import * as PIXI from 'pixi.js'
-
+import STATE from '@/store/States'
 import Button from './components/Button'
 import Power from './components/Power'
 import PowerButton from './components/PowerButton'
 import BottomButtom from './components/BottomButton'
+import API from '@/api'
 
 import { renderALayer } from './ARing'
 import { renderBLayer } from './BRing'
@@ -123,8 +124,8 @@ import { renderDLayer } from './DRing'
 import video from './video.mp4'
 const scaleY = Math.tan((15 * Math.PI) / 180)
 const app = new PIXI.Application({
-  antialias: true,
-  backgroundAlpha: 0
+  antialias: true,//default: false 反锯齿
+  backgroundAlpha: 0,//设置背景颜色透明度   0是透明
 })
 export default {
   components: { Button, Power, BottomButtom, PowerButton },
@@ -163,7 +164,6 @@ export default {
       let router = this.$router
       let orgCode = this.$store.state[STATE.USER_ORG].orgCode
       orgCode = orgCode == '320205' ? '320205005000' : orgCode // 锡山区默认厚桥街道
-
       Promise.all([
         API.dashboard.getGeneralPortalInfo({
           orgCode: orgCode

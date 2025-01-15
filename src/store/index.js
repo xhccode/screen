@@ -5,7 +5,6 @@ import moment from 'moment'
 import EventModel from '@/model/EventModel.js'
 import API from '@/api/index'
 
-
 Vue.use(Vuex)
 
 let userStr = sessionStorage.getItem(STATE.USER_INFO)

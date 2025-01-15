@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/index.js'
 import { Notification } from 'element-ui'
+import STATE from '@/store/States'
+import API from '@/api'
 //
 const routerPush = Router.prototype.push
 Router.prototype.push = function push (location) {
@@ -14,7 +16,7 @@ Router.prototype.replace = function replace (location) {
 Vue.use(Router)
 export const routers = [
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: () =>
       import(/* webpackChunkName: "login_ex" */ '@/pages/Login.vue')
@@ -119,28 +121,37 @@ let router = new Router({
   routes: routers
 })
 
+const whiteList = ['/login','/middlePage','/404','/map'];//重定向
 router.beforeEach(async (to, from, next) => {
   let authorizationCode = localStorage.getItem('auth')
-  if (authorizationCode &&
-    !store.state[STATE.USER_INFO].realName
-  ) {
-    let userInfo = await API.login.getUserInfo()
-    if(userInfo.data.code === 712){
-      Notification.error({
-        title: '错误',
-        message: userInfo.data.msg
-      })
+  if (authorizationCode) {
+    const hasGetUserInfo = store.state[STATE.USER_INFO].realName;
+    if(hasGetUserInfo){
       next()
-      return
+    }else{
+      let userInfo = await API.login.getUserInfo()
+      if(userInfo.data.code === 712){
+        Notification.error({
+          title: '错误',
+          message: userInfo.data.msg
+        })
+        next( `/login`)
+        return
+      }
+      store.commit(STATE.USER_INFO, userInfo.data.data)
+      let orgInfo = await API.map.getOrgRegionalBoundary({
+        orgCode: userInfo.data.data.orgCode
+      })
+      store.commit(STATE.USER_ORG, orgInfo.data.data)
+      next({ ...to, replace: true })
     }
-    store.commit(STATE.USER_INFO, userInfo.data.data)
-    let orgInfo = await API.map.getOrgRegionalBoundary({
-      orgCode: userInfo.data.data.orgCode
-    })
-    store.commit(STATE.USER_ORG, orgInfo.data.data)
-    next({ path: to.fullPath })
   } else {
-    next()
+    if(whiteList.indexOf(to.path) !== -1){//在白名单中，直接进入
+      next();
+    }else{
+      // next(`/login?redirect=${to.path}`);
+      next('/login');
+    }
   }
 })
 export default router

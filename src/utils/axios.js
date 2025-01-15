@@ -3,22 +3,17 @@
  */
 import { Notification } from 'element-ui'
 import store from '@/store/index.js'
-import router from '@/router/index'
+import STATE from '@/store/States'
+import LOG from '@/utils/logger'
 const axios = require('axios')
 
 const instance = axios.create({
   // baseURL: process.env.BASE_URL,
-  timeout: process.env.REQUEST_TIMEOUT
+  timeout: process.env.VUE_APP_REQUEST_TIMEOUT
 })
 
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
-  // if (config.secure !== false) {
-  //   if (!store.state[STATE.USER_INFO].account) {
-  //     router.replace({ name: 'Login' })
-  //     return
-  //   }
-  // }
   // 设置安全令牌
   if (config.outter !== true) {
     config.headers.authorizationCode = store.state[STATE.AUTHORIZATION_CODE] || localStorage.getItem('auth')
@@ -28,9 +23,7 @@ instance.interceptors.request.use(function (config) {
   if (!config.headers.orgCode && config.outter !== true) {
     config.headers.orgCode = store.state[STATE.USER_ORG].orgCode
   }
-  //
-  //
-  // config.headers = config['Content-Type']
+
   if (config.method === 'get') {
     // 防止缓存
     config.params = { _t: Date.parse(new Date()), ...config.params, ...config.data }
@@ -45,11 +38,6 @@ instance.interceptors.response.use(
     let {
       data: { code }
     } = resp
-    // if (code === 712) {
-    //   // authorizationCode 认证失败
-    //   router.replace({ name: 'Login' })
-    //   return
-    // }
     const markerable = resp.config.markerable
     if (_.isFunction(markerable)) {
       markerable(resp)
@@ -81,7 +69,7 @@ export default function (ops, data) {
     LOG.error('请提供请求url')
     return false
   }
-  const config = { baseURL: process.env.BASE_URL, ...ops, data, headers: ops.headers || {} }
+  const config = { baseURL: process.env.VUE_APP_BASE_URL, ...ops, data, headers: ops.headers || {} }
   if (data && data.orgCode) {
     Object.assign(config.headers, { orgCode: data.orgCode })
   }

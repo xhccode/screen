@@ -19,17 +19,17 @@
       <div class="ht-ii right">
         <div class="user">
           <el-dropdown trigger="click" @command="command">
-            <span class="">
+            <span class="" style="color: #fff">
               <i class="iconfont icon-touxiang"></i>
               <span class="txt">当前登录：</span>
               <span class="txt">{{ orgName }}</span>
               <span class="txt divider">-</span>
               <span class="txt">{{ userName }}</span>
-              <i class="el-icon-arrow-down el-icon--right"></i>
+<!--              <i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
             </span>
-            <el-dropdown-menu class="user-op" slot="dropdown">
-              <el-dropdown-item command="modifyPwd">修改密码</el-dropdown-item>
-            </el-dropdown-menu>
+<!--            <el-dropdown-menu class="user-op" slot="dropdown">-->
+<!--              <el-dropdown-item command="modifyPwd">修改密码</el-dropdown-item>-->
+<!--            </el-dropdown-menu>-->
           </el-dropdown>
         </div>
         <div class="logout">
@@ -66,7 +66,9 @@
 
 <script>
 import data from './footer_data.js'
-
+import STATE from '@/store/States'
+import LOG from '@/utils/logger'
+import API from '@/api'
 export default {
   name: 'XsHeader',
   data () {
@@ -74,7 +76,6 @@ export default {
       interval: -1,
       timer: -1,
       currTime: '',
-      status: false,
       counter: this.$route.query ? parseInt(this.$route.query['xs.router.times'] || 1) : 1
     }
   },
@@ -90,7 +91,7 @@ export default {
     },
     orgName () {
       let orgName = this.$store.state[STATE.USER_INFO].orgName
-      if (orgName.indexOf('-') > -1) {
+      if (orgName && orgName.indexOf('-') > -1) {
         return orgName.split('-').slice(-1)[0]
       } else {
         return orgName
@@ -167,7 +168,6 @@ export default {
       handler ({ ExtraUrgentList, UrgentList }) {}
     }
   },
-  inject: ['loginTrtcAndTim', 'logoutTrtcAndTim'],
   methods: {
     // 点击特急/紧急数字进入指挥页面
     forwardCommand (jjcd) {
@@ -185,11 +185,12 @@ export default {
       API.login
         .logout()
         .then(res => {
-          if (process.env.NODE_ENV === 'production') {
-            this.$store.commit(STATE.USER_INFO, {})
-            this.$store.commit(STATE.AUTHORIZATION_CODE, '')
-          }
-          this.$router.push({ name: 'Login' })
+          this.$store.commit(STATE.USER_INFO, {})
+          this.$store.commit(STATE.AUTHORIZATION_CODE, '')
+          localStorage.removeItem('auth')
+          localStorage.removeItem('loginName')
+          localStorage.removeItem('authPC')
+          this.$router.push('/login')
           this.$notify.success({
             title: '成功',
             message: '退出成功'
@@ -197,19 +198,12 @@ export default {
         })
         .catch(() => {})
     },
-    // 修改密码
-    modifyPwd (data) {
-      this.$data.modalData.flag = true
-    },
   },
   created () {
     this.currTime = this.$fmt(new Date(), 'YYYY年MM月DD日 HH:mm:ss dddd')
     this.interval = setInterval(() => {
       this.currTime = this.$fmt(new Date(), 'YYYY年MM月DD日 HH:mm:ss dddd')
     }, 1000)
-    this.$bus.$on(EVENT.TIM_STATUS_CHANGE, status => {
-      this.status = status
-    })
   },
   beforeDestroy () {
     if (this.interval > -1) {
@@ -322,14 +316,6 @@ export default {
             font-weight: bolder;
           }
         }
-      }
-    }
-    .trtc-status {
-      display: flex;
-      .label {
-      }
-      .trtc-sel {
-        width: 12rem;
       }
     }
     .weather {

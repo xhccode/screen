@@ -3,6 +3,94 @@
  */
 import $axios from '@/utils/axios.js'
 export default {
+  /*
+  *  3.0 登录接口
+  * */
+  login30 (accountName) {
+    const service = {
+      method: 'post',
+      baseURL: process.env.VUE_APP_EVENT_URL,
+      url: `/dataView/system/authentication`
+    }
+    return $axios(service, {
+      loginName: accountName,
+      password: "$!$" + btoa('A123456wx%')
+    })
+  },
+  /**
+   * http://47.100.91.141:3000/project/105/interface/api/2253
+   * 右侧获取网格力量（专职网格员 监控点位 人房企 三个tatale页的接口合并为一个）分页查询-周文才
+   * type 类型（1：专职网格员 2：监控点位 3：人  8：房 9：企
+   * @param {pageSize, currPage, keyword, type} data
+   * @returns
+   */
+  getPowerTabsData (data) {
+    const service = {
+      method: 'get',
+      url: `/dataView/panoramaView/rightStatisticsAndQueries/queryPageForPowerGrid`,
+      markerable: function ({ data: { data } }) {
+        _.forEach(data.list, d => {
+          if (d.loginName) {
+            // MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_GRID)
+            let { account, loginName } = d
+            d.account = account || loginName
+            d.loginName = loginName || account
+            d.$timOnline = false
+          } else if (d.deviceId) {
+            // MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_VIDEO)
+          } else {
+            // todo 房子
+          }
+        })
+      }
+    }
+    data.orgCode && Object.assign(service, { headers: { orgCode: data.orgCode } })
+    // deviceStatus =1  在线，只查看在线的
+    return $axios(service, { ...data })
+  },
+  getPowerTabsData1 (data) {
+    let service = {
+      headers: {
+        appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
+        auth: localStorage.getItem('authPC') || '',
+        orgCode: 320205
+      },
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
+      method: 'get',
+      url: `/datacenter/dataView/panoramaView/rightStatisticsAndQueries/queryPageForPowerGrid`,
+      markerable: function ({ data: { data } }) {
+        _.forEach(data.list, d => {
+          if (d.loginName || d.account) {
+            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_GRID)
+            let { account, loginName } = d
+            d.account = account || loginName
+            d.loginName = loginName || account
+            d.$timOnline = false
+          } else if (d.deviceId) {
+            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_VIDEO)
+          } else {
+            // todo 房子
+          }
+        })
+      }
+    }
+    return $axios(service, {
+      currPage: data.currPage,
+      pageSize: data.pageSize,
+      keyword: data.keyword,
+      type: 'gridMember'
+    })
+  },
+
+
+
+
+
+
+
+
+
+
   /**
    * http://47.100.91.141:3000/project/105/interface/api/2244
    * 右侧获取网格力量（巡查走访 信息采集 离线）数量统计-周文才
@@ -253,70 +341,7 @@ export default {
     }
     return $axios(service, data)
   },
-  /**
-   * http://47.100.91.141:3000/project/105/interface/api/2253
-   * 右侧获取网格力量（专职网格员 监控点位 人房企 三个tatale页的接口合并为一个）分页查询-周文才
-   * type 类型（1：专职网格员 2：监控点位 3：人  8：房 9：企
-   * @param {pageSize, currPage, keyword, type} data
-   * @returns
-   */
-  getPowerTabsData (data) {
-    const service = {
-      method: 'get',
-      url: `/dataView/panoramaView/rightStatisticsAndQueries/queryPageForPowerGrid`,
-      markerable: function ({ data: { data } }) {
-        _.forEach(data.list, d => {
-          if (d.loginName) {
-            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_GRID)
-            let { account, loginName } = d
-            d.account = account || loginName
-            d.loginName = loginName || account
-            d.$timOnline = false
-          } else if (d.deviceId) {
-            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_VIDEO)
-          } else {
-            // todo 房子
-          }
-        })
-      }
-    }
-    data.orgCode && Object.assign(service, { headers: { orgCode: data.orgCode } })
-    // deviceStatus =1  在线，只查看在线的
-    return $axios(service, { ...data })
-  },
-  getPowerTabsData1 (data) {
-    let service = {
-      headers: {
-        appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
-        auth: localStorage.getItem('authPC') || '',
-        orgCode: 320205
-      },
-      baseURL: process.env.EVENT_V2_URL,
-      method: 'get',
-      url: `/datacenter/dataView/panoramaView/rightStatisticsAndQueries/queryPageForPowerGrid`,
-      markerable: function ({ data: { data } }) {
-        _.forEach(data.list, d => {
-          if (d.loginName || d.account) {
-            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_GRID)
-            let { account, loginName } = d
-            d.account = account || loginName
-            d.loginName = loginName || account
-            d.$timOnline = false
-          } else if (d.deviceId) {
-            MAP.touchMarkerType(d, MAP.MARKER_TYPES.MK_VIDEO)
-          } else {
-            // todo 房子
-          }
-        })
-      }
-    }
-    return $axios(service, {
-      currPage: data.currPage,
-      pageSize: data.pageSize,
-      keyword: data.keyword,
-      type: 'gridMember'
-    })
-  },
+
   getImportAddrType (data) {
     const service = {
       method: 'get',
@@ -372,7 +397,7 @@ export default {
         appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
         auth: localStorage.getItem('authPC') || '',
       },
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/datacenter/v1/stressPerson/getStressPersonList`,
       markerable: function ({ data: { data } }) {
         _.forEach(data.list, d => {
@@ -399,7 +424,7 @@ export default {
         appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
         auth: localStorage.getItem('authPC') || '',
       },
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/datacenter/v1/peopleInfo/getPeopleData`,
     }
     return $axios(service, params)
@@ -414,7 +439,7 @@ export default {
         appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
         auth: localStorage.getItem('authPC') || '',
       },
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/datalog/v1/passiveVisits/getVisitsList`,
     }
     return $axios(service, params)
@@ -429,7 +454,7 @@ export default {
         appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
         auth: localStorage.getItem('authPC') || '',
       },
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/datalog/v1/passiveVisits/getFocusPersonnelData`,
     }
     return $axios(service, params)
@@ -457,7 +482,7 @@ export default {
         appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
         auth: localStorage.getItem('authPC') || '',
       },
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       method: 'get',
       url: `/event-v2/wg-events/${id}`
     }
@@ -469,7 +494,7 @@ export default {
           appid: 'c668b254-05b7-4471-9233-637fc57a71ae',
           auth: localStorage.getItem('authPC') || '',
         },
-        baseURL: process.env.EVENT_V2_URL,
+        baseURL: process.env.VUE_APP_EVENT_V2_URL,
         method: 'get',
         url: `/oss/oss/secure-url?objectKey=${key}`
     }
@@ -482,7 +507,7 @@ export default {
           auth: localStorage.getItem('authPC') || '',
         },
         method: 'get',
-        baseURL: process.env.EVENT_V2_URL,
+        baseURL: process.env.VUE_APP_EVENT_V2_URL,
         url: `/event-v2/works/?eventId=${id}&responsible=true&supplement=false`
       }
       return $axios(service)
@@ -494,7 +519,7 @@ export default {
         auth: localStorage.getItem('authPC') || '',
       },
       method: 'get',
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/event-v2/wg-events/${id}/involved-atts`
     }
     return $axios(service)
@@ -506,19 +531,8 @@ export default {
         auth: localStorage.getItem('authPC') || '',
       },
       method: 'get',
-      baseURL: process.env.EVENT_V2_URL,
+      baseURL: process.env.VUE_APP_EVENT_V2_URL,
       url: `/event-v2/wg-events/${id}/trajectories`
-    })
-  },
-  login30 (accountName) {
-    const service = {
-      method: 'post',
-      baseURL: process.env.EVENT_URL,
-      url: `/dataView/system/authentication`
-    }
-    return $axios(service, {
-      loginName: accountName,
-      password: "$!$" + btoa('A123456wx%')
     })
   },
   /**

@@ -67,6 +67,7 @@
 </template>
 <script>
 import API from '@/api'
+import STATE from '@/store/States'
 export default {
   name: 'Login',
   data () {
@@ -78,8 +79,8 @@ export default {
       loading: false,
       active: 'form',
       user: {
-        // loginName:'Dwxxs003',
-        // password:'qw12mk'
+        loginName:'Dwxxs003',
+        password:'qw12mk'
       },
       rules: {
         loginName: { required: true, message: '请输入账号', trigger: 'blur' },
@@ -91,9 +92,6 @@ export default {
     appName () {
       return process.env.VUE_APP_NAME
     }
-  },
-  mounted() {
-    console.log(process,'process123',process.env.VUE_APP_NAME)
   },
   created () {
     this.timer = setInterval(() => {

@@ -25,6 +25,7 @@
 <script>
 import XsFooter from './footer'
 import XsHeader from './header'
+import EVENT from '@/utils/Events'
 import WindowContainer from '@/components/command/windowContainer'
 import VideoListDialog from '@/components/pollList/videoList.vue'
 import * as utils from '@/utils'

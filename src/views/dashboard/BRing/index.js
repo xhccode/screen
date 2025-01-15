@@ -136,6 +136,10 @@ export function renderBLayer (app, scaleY, drawAxis, router, orgCode) {
     if (item.orgCode != '320205005000') return
     router.push('/datahome')
   }
+  const onDbClick = item => {
+    if (item.orgCode != '320205005000') return
+    router.push('/datahome')
+  }
   tagList.forEach((item, index) => {
     isometryPlane.addChild(item)
     item.on('click', () => onClick(list[index]))
