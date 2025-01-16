@@ -1,5 +1,5 @@
 export default [
-  { label: '指挥体系', img: '/static/img/home.png', path: '/dashboard', visible: true, ready: true, footable: false },
+  { label: '指挥体系', img: '/static/img/home.png', path: '/Dashboard', visible: true, ready: true, footable: false },
   {
     label: '首页',
     img: '/static/img/home-big.png',

@@ -107,7 +107,7 @@ export default {
     },
     mounted() {
         this.defaultTerrainProvider = viewer.terrainProvider;
-        this.getMenu();
+        // this.getMenu();
     },
     methods: {
         //设置树节点

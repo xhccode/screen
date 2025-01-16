@@ -1,5 +1,4 @@
 import merge from 'element-ui/src/utils/merge'
-import _default from 'vuex'
 
 export default {
   install (Vue) {

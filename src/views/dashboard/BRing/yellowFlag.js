@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 11:20:22
- * @FilePath: /visualization/src/Dashboard/BRing/yellowFlag.js
- */
 import * as PIXI from 'pixi.js'
 import image from './chengguan.png'
 

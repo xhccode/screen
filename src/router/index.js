@@ -22,15 +22,15 @@ export const routers = [
       import(/* webpackChunkName: "login_ex" */ '@/pages/Login.vue')
   },
   {
-    path: '/home',
-    redirect: '/home',
+    path: '/',
+    redirect: '/Dashboard',
     meta: {
       title: '系统首页'
     },
     component: resolve => require(['@/views/common/index'], resolve),
     children: [
       {
-        path: '/dashboard',
+        path: '/Dashboard',
         name: 'Dashboard',
         component: () =>
           import(
@@ -40,17 +40,17 @@ export const routers = [
           footer: false
         }
       },
-      // {
-      //   name: 'DataHome',
-      //   path: '/datahome',
-      //   component: () =>
-      //     import(
-      //       /* webpackChunkName: "data_home" */ '@/views/dataHome/index.vue'
-      //     ),
-      //   meta: {
-      //     title: '首页'
-      //   }
-      // },
+      {
+        name: 'DataHome',
+        path: '/datahome',
+        component: () =>
+          import(
+            /* webpackChunkName: "data_home" */ '@/views/dataHome/index.vue'
+          ),
+        meta: {
+          title: '首页'
+        }
+      },
       // {
       //   name: 'Party',
       //   path: '/party',
@@ -123,6 +123,7 @@ let router = new Router({
 
 const whiteList = ['/login','/middlePage','/404','/map'];//重定向
 router.beforeEach(async (to, from, next) => {
+  console.log(to,from,'222444')
   let authorizationCode = localStorage.getItem('auth')
   if (authorizationCode) {
     const hasGetUserInfo = store.state[STATE.USER_INFO].realName;

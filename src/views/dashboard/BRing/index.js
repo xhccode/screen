@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 14:30:28
- * @FilePath: /visualization/src/Dashboard/BRing/index.js
- */
 import * as PIXI from 'pixi.js'
 import { makeBRingTag } from './bRingTag'
 import { makeActiveBRingTag } from './activeTag'

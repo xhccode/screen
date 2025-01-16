@@ -30,34 +30,34 @@ export default {
         }
       }) {
         let jjcdTxts = ['特急', '紧急', '一般']
-        MAP.touchMarkerType(expressList, d => {
-          d.title = d.title || d.msgtitle
-          d.orgName = d.orgName || d.fromdistrict
-          d.time = d.time || d.accepttime
-          d.address = d.address || d.fromaddress
-          d.jjcd = d.jjcd || d.priority
-          // 0=特急 1=紧急 2=一般
-          d.jjcdTxt = d.jjcdTxt || jjcdTxts[+d.jjcd]
-          d.primaryKey = d.primaryKey || d.eventCode
-          d.longitude = d.maplong
-          d.latitude = d.maplat
-          d.issueActivitiId = d.issueActivitiId || d.eventCode
-          return MAP.MARKER_TYPES.MK_EVENT
-        })
-        MAP.touchMarkerType(urgentList, d => {
-          d.title = d.title || d.msgtitle
-          d.orgName = d.orgName || d.fromdistrict
-          d.time = d.time || d.accepttime
-          d.address = d.address || d.fromaddress
-          d.jjcd = d.jjcd || d.priority
-          // 0=特急 1=紧急 2=一般
-          d.jjcdTxt = d.jjcdTxt || jjcdTxts[+d.jjcd]
-          d.primaryKey = d.primaryKey || d.eventcode
-          d.longitude = d.maplong
-          d.latitude = d.maplat
-          d.issueActivitiId = d.issueActivitiId || d.eventCode
-          return MAP.MARKER_TYPES.MK_EVENT
-        })
+        // MAP.touchMarkerType(expressList, d => {
+        //   d.title = d.title || d.msgtitle
+        //   d.orgName = d.orgName || d.fromdistrict
+        //   d.time = d.time || d.accepttime
+        //   d.address = d.address || d.fromaddress
+        //   d.jjcd = d.jjcd || d.priority
+        //   // 0=特急 1=紧急 2=一般
+        //   d.jjcdTxt = d.jjcdTxt || jjcdTxts[+d.jjcd]
+        //   d.primaryKey = d.primaryKey || d.eventCode
+        //   d.longitude = d.maplong
+        //   d.latitude = d.maplat
+        //   d.issueActivitiId = d.issueActivitiId || d.eventCode
+        //   return MAP.MARKER_TYPES.MK_EVENT
+        // })
+        // MAP.touchMarkerType(urgentList, d => {
+        //   d.title = d.title || d.msgtitle
+        //   d.orgName = d.orgName || d.fromdistrict
+        //   d.time = d.time || d.accepttime
+        //   d.address = d.address || d.fromaddress
+        //   d.jjcd = d.jjcd || d.priority
+        //   // 0=特急 1=紧急 2=一般
+        //   d.jjcdTxt = d.jjcdTxt || jjcdTxts[+d.jjcd]
+        //   d.primaryKey = d.primaryKey || d.eventcode
+        //   d.longitude = d.maplong
+        //   d.latitude = d.maplat
+        //   d.issueActivitiId = d.issueActivitiId || d.eventCode
+        //   return MAP.MARKER_TYPES.MK_EVENT
+        // })
       }
     }
     return $axios(service, data)

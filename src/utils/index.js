@@ -1,4 +1,3 @@
-const LOG_PREFIX = 'trtc-callling-webrtc-demo:'
 
 export function isValidatePhoneNum (phoneNum) {
   const reg = new RegExp('^1[0-9]{10}$', 'gi')
@@ -45,11 +44,7 @@ export function getUserLoginInfo () {
   }
 }
 
-export function log (content) {
-  // console.log(`${LOG_PREFIX} ${content}`)
-}
-
 export function getCurDayTime(time){
   let now = new Date();
-  return new Date(now.getFullYear() +"-" + (now.getMonth()+1) +"-" + now.getDate() +" "+time) 
+  return new Date(now.getFullYear() +"-" + (now.getMonth()+1) +"-" + now.getDate() +" "+time)
 }

@@ -1,5 +1,8 @@
 <template>
   <div class="main-box">
+    <!-- 地图  -->
+    <base-map />
+
     <audio ref="audioMsgArrived" :src="audioMsgArrived" />
     <div class="header-box">
       <xs-header />
@@ -28,10 +31,11 @@ import XsHeader from './header'
 import EVENT from '@/utils/Events'
 import WindowContainer from '@/components/command/windowContainer'
 import VideoListDialog from '@/components/pollList/videoList.vue'
+import BaseMap from "@/components/BaseCesium";
 import * as utils from '@/utils'
 export default {
   name: 'index',
-  components: { XsHeader, XsFooter },
+  components: { BaseMap, XsHeader, XsFooter },
   mixins: [WindowContainer],
   data () {
     return {

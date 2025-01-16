@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-13 15:59:20
- * @FilePath: /visualization/src/Dashboard/cRingTag.js
- */
 import * as PIXI from 'pixi.js'
 import tagImg from './c_tag.png'
 

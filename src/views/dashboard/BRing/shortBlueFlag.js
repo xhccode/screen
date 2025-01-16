@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 11:22:45
- * @FilePath: /visualization/src/Dashboard/BRing/shortBlueFlag.js
- */
 import * as PIXI from 'pixi.js'
 import arrow from './short-blue-flag.png'
 

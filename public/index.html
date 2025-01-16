@@ -10,8 +10,8 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
     <title>${process.env.VUE_APP_NAME}</title>
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
   </head>
   <body>
     <noscript>
@@ -21,6 +21,12 @@
     <!-- built files will be auto injected -->
     <iframe src="static/audio/empty.mp3" allow="autoplay" style="display: none;"></iframe>
     <script type="text/javascript" src="<%= BASE_URL %>/Cesium/Cesium.js"></script>
+    <!-- 比例尺和罗盘 -->
+    <script src="<%= BASE_URL %>/libs/viewerCesiumNavigationMixin.min.js"></script>
+    <!-- 2D鹰眼 -->
+    <script src="<%= BASE_URL %>/libs/hawkEye2DMap.js"></script>
+    <!-- 量测 -->
+    <script src="<%= BASE_URL %>/libs/cesium-measure.js"></script>
   </body>
   <script type="text/javascript">
     window.HELP_IMPROVE_VIDEOJS = false

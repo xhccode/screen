@@ -38,16 +38,16 @@ export default {
       imageryProvider: new Cesium.TileMapServiceImageryProvider({
         url: Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
       }),
-      homeButton:false,
-      sceneModePicker:false,
+      homeButton:false,// 是否显示回到初始视图的按钮
+      sceneModePicker:false,// 是否显示场景模式选择器（2D、3D、鹰眼视图）
       baseLayerPicker:false,// 影像切换
       animation:false,// 是否显示动画控件
       infoBox:false,// 是否显示点击要素之后显示的信息
       selectionIndicator:false,// 要素选中框
       geocoder:false,// 是否显示地名查找控件
       timeline:false,// 是否显示时间线控件
-      fullscreenButton:false,
-      shouldAnimate:true,
+      fullscreenButton:false,// 是否显示全屏
+      shouldAnimate:true,// 设置是否启用动画效果
       scene3DOnly:true,// 每个几何实例以3D渲染，节省GPU内存
       navigationHelpButton:false,// 是否显示帮助信息控件
       contextOptions: {

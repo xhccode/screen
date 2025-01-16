@@ -41,7 +41,7 @@ export default {
       method: 'get',
       url: `/dataView/gridConstruction/index/getRegionalBoundary`,
       markerable: function ({ data: { data } }) {
-        MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
+        // MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
       }
     }
     Object.assign(service, { headers: { orgCode: data.orgCode } })
@@ -82,14 +82,14 @@ export default {
       method: 'get',
       url: `/dataView/gridConstruction/index/getUnitRegionalBoundary`,
       markerable: function ({ data: { data } }) {
-        MAP.touchMarkerType(data, e => {
-          // 城管是事件
-          if (unitType === 3) {
-            return MAP.MARKER_TYPES.MK_EVENT
-          } else {
-            return MAP.MARKER_TYPES.MK_ADDRESS
-          }
-        })
+        // MAP.touchMarkerType(data, e => {
+        //   // 城管是事件
+        //   if (unitType === 3) {
+        //     return MAP.MARKER_TYPES.MK_EVENT
+        //   } else {
+        //     return MAP.MARKER_TYPES.MK_ADDRESS
+        //   }
+        // })
       }
     }
     Object.assign(service, { headers: { orgCode: data.orgCode } })

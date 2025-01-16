@@ -79,7 +79,7 @@ export default {
       method: 'get',
       url: `/dataView/gridConstruction/index/getOrgTree`,
       markerable: function ({ data: { data } }) {
-        MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
+        // MAP.touchMarkerType(data, MAP.MARKER_TYPES.MK_ADDRESS)
       }
     }
     return $axios(service, data)

@@ -1,3 +1,4 @@
+import LOG from '@/api'
 export default {
   provide () {
     return {

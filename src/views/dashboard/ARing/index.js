@@ -1,10 +1,4 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 10:19:02
- * @FilePath: /visualization/src/Dashboard/ARing/index.js
- */
 import * as PIXI from 'pixi.js'
-
 import image from './a_bg.png'
 
 export function renderALayer (app) {

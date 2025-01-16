@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-13 14:58:30
- * @FilePath: /visualization/src/Dashboard/bRingTag.js
- */
 import * as PIXI from 'pixi.js'
 import arrow from './tag.jpg'
 

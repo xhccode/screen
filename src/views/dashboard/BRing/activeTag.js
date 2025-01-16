@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 14:33:16
- * @FilePath: /visualization/src/Dashboard/BRing/activeTag.js
- */
 import * as PIXI from 'pixi.js'
 import image from './active-tag.png'
 import arrowImg from './active-arrow.png'

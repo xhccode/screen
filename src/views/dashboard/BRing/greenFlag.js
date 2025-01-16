@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 11:18:10
- * @FilePath: /visualization/src/Dashboard/BRing/greenFlag.js
- */
 import * as PIXI from 'pixi.js'
 import image from './huanbao.png'
 

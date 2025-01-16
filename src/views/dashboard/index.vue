@@ -1,8 +1,3 @@
-<!--
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 23:52:54
- * @FilePath: /visualization/src/Dashboard/index.vue
--->
 <template>
   <div class="dashboard-wrap">
     <div class="video">

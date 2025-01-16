@@ -4,6 +4,7 @@ import STATE from './States'
 import moment from 'moment'
 import EventModel from '@/model/EventModel.js'
 import API from '@/api/index'
+import CONSTANT from '@/utils/constant'
 
 Vue.use(Vuex)
 

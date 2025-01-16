@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 10:24:06
- * @FilePath: /visualization/src/Dashboard/CRing/index.js
- */
 import * as PIXI from 'pixi.js'
 
 import { zipWith } from 'ramda'

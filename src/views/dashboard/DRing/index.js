@@ -1,8 +1,3 @@
-/*
- * @LastEditors: xander.kang
- * @LastEditTime: 2021-05-14 10:24:22
- * @FilePath: /visualization/src/Dashboard/DRing/index.js
- */
 import * as PIXI from 'pixi.js'
 import { zipWith, repeat } from 'ramda'
 
